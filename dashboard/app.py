@@ -35,7 +35,7 @@ from faicons import icon_svg
 # Use a type hint to make it clear that it's an integer (: int)
 # --------------------------------------------
 
-UPDATE_INTERVAL_SECS: int = 1
+UPDATE_INTERVAL_SECS: int = 1  # Update interval every second
 
 # --------------------------------------------
 # Initialize a REACTIVE CALC that our display components can call
@@ -97,13 +97,13 @@ with ui.sidebar(open="open"):
 
     ui.a(
         "GitHub Source",
-        href="https://github.com/example/stock-price-monitor",
+        href="https://github.com/achannarasappa/ticker?tab=readme-ov-file",
         target="_blank",
     )
 
     ui.a(
         "Live Demo",
-        href="https://example.github.io/stock-price-monitor/",
+        href="https://github.com/achannarasappa/ticker/blob/master/docs/ticker.gif",
         target="_blank",
     )
 
@@ -122,12 +122,13 @@ def display_price():
     stock_data_entry = reactive_calc_stock()
     return f"${stock_data_entry['price']} USD"
 
-ui.p("stock price is fluctuating")
+# Stock price fluctuating indicator
+ui.p("Stock price is fluctuating...")
 icon_svg("chart-line")
-
 
 ui.hr()
 
+# Display current timestamp for the stock price
 ui.h2("Current Date and Time")
 
 @render.text
@@ -136,6 +137,7 @@ def display_time():
     stock_data_entry = reactive_calc_stock()
     return f"{stock_data_entry['timestamp']}"
 
+# Create a layout for the main display area
 with ui.layout_columns():
     with ui.card():
         ui.card_header("Real-Time Stock Price")
