@@ -71,7 +71,7 @@ def reactive_calc_combined():
 # --------------------------------------------
 
 # Page options like title and filling
-ui.page_opts(title="Continuous Intelligence: Live Data Example", fillable=True)
+ui.page_opts(title="Penguins - Huntsman: Live Data Example", fillable=True)
 
 # Sidebar with links and additional information
 with ui.sidebar(open="open"):
@@ -98,11 +98,14 @@ with ui.layout_columns():
             deque_snapshot, df, latest_data_entry = reactive_calc_combined()
             return f"{latest_data_entry['temp']} °C"
 
-        "warmer than usual"
+        "colder than usual"
 
-    # Card for Current Date and Time
-    with ui.card(full_screen=True):
-        ui.card_header("Current Date and Time")
+    # Current Date and Time Box
+    with ui.value_box(
+        showcase=icon_svg("calendar"),  # Using a calendar icon for date/time
+        theme="bg-gradient-blue-purple",  # Same gradient background as the temperature box
+    ):
+        "Current Date and Time"
         @render.text
         def display_time():
             """Get the latest reading and return a timestamp string"""
@@ -156,7 +159,13 @@ with ui.layout_columns():
                 fig.update_layout(
                     xaxis_title="Time",
                     yaxis_title="Temperature (°C)",
-                    template="plotly_dark"  # Use dark theme for plot
+                    template="plotly_dark",  # Use dark theme for plot
+                    showlegend=True,  # Always show legend
+                    xaxis=dict(showline=True, linewidth=1, linecolor='gray'),  # Customize axis appearance
+                    yaxis=dict(showline=True, linewidth=1, linecolor='gray')
                 )
+
+                # Keep the layout and prevent flickering
+                fig.update_traces(marker=dict(size=8))
 
             return fig
